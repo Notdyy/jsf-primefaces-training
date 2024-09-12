@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="th"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Primefaces Lab Form</title>
+	<style>
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom right, skyblue, pink);
+}
+
+.center-form {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+.form-frame {
+	border: 5px solid rgb(0, 0, 0); /* Initial border color */
+	padding: 20px;
+	border-radius: 10px;
+	background-color: #f9f9f9;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	animation: colorLoop 5s infinite; /* Apply the animation */
+}
+
+@keyframes colorLoop {
+	0% {
+		border-color: rgb(255, 0, 0); /* Red */
+	}
+	25% {
+		border-color: rgb(0, 255, 0); /* Green */
+	}
+	50% {
+		border-color: rgb(0, 0, 255); /* Blue */
+	}
+	75% {
+		border-color: rgb(255, 255, 0); /* Yellow */
+	}
+	100% {
+		border-color: rgb(255, 0, 0); /* Red */
+	}
+}
+</style>
+</h:head>
+<h:body>
+	<div class="center-form">
+		<div class="form-frame">
+			<h:form>
+				<h:panelGrid>
+					<p:outputLabel for="option" value="Title" />
+					<p:selectOneMenu id="option" value="#{pfBean.person.selectedOption}">
+						<f:selectItem itemLabel="Select One" itemValue="" />
+						<f:selectItem itemLabel="Mrs." itemValue="1" />
+						<f:selectItem itemLabel="Mr." itemValue="2" />
+						<f:selectItem itemLabel="Miss." itemValue="3" />
+						<f:selectItem itemLabel="Ms." itemValue="4" />
+					</p:selectOneMenu>
+
+					<p:outputLabel id="yyyy" value="First Name :" />
+					<p:inputText value="#{pfBean.person.firstName}" />
+					<p:outputLabel value="Last Name :" />
+					<p:inputText value="#{pfBean.person.lastName}" />
+
+					<p:outputLabel id="Gender" value="Gender :" />
+					<p:selectOneButton value="#{pfBean.person.option}">
+						<f:selectItem itemLabel="Male" itemValue="Male" />
+						<f:selectItem itemLabel="Female" itemValue="Female" />
+					</p:selectOneButton>
+					<p:selectOneRadio id="line" value="#{pfBean.person.contact}"
+						layout="lineDirection">
+						<f:selectItem itemLabel="Phone" itemValue="Phone" />
+						<f:selectItem itemLabel="e-mail" itemValue="e-mail" />
+						<p:ajax event="change" process="@this" update="inputcontact" />
+					</p:selectOneRadio>
+					<h:panelGroup id="inputcontact">
+						<h:panelGroup id="inputphone"
+							rendered="#{pfBean.person.contact == 'Phone'}">
+							<p:outputLabel id="phone" value="Phone :" />
+							<p:inputText value="#{pfBean.person.phone}" />
+						</h:panelGroup>
+						<h:panelGroup id="inputemail"
+							rendered="#{pfBean.person.contact == 'e-mail'}">
+							<p:outputLabel id="email" value="e-mail :" />
+							<p:inputText value="#{pfBean.person.email}" />
+						</h:panelGroup>
+						
+					</h:panelGroup>
+					<p:commandButton value="Submit"
+						action="#{pfBean.submitButtonOnClick}" process="@form"
+						update="xxxx, gender,  " style="background-color: blue; color: white;" />
+					<br />
+					<p:outputLabel id="xxxx" value="FullName : #{pfBean.fullName}" />
+					<p:outputLabel id="gender" value="Gender : #{pfBean.person.option}" />
+				</h:panelGrid>
+			</h:form>
+		</div>
+	</div>
+</h:body>
+</html>

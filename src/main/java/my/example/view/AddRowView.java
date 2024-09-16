@@ -2,6 +2,7 @@ package my.example.view;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Random;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -18,15 +19,14 @@ import my.example.service.ProductService;
 @ViewScoped
 public class AddRowView implements Serializable {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private List<Product> products1;
+    private List<Product> products1;
 
     @Inject
     private ProductService service;
+
+    private Random random = new Random(); 
 
     @PostConstruct
     public void init() {
@@ -52,13 +52,12 @@ public class AddRowView implements Serializable {
     }
 
     public void onAddNew() {
-        // Add one new product to the table:
-        Product newProduct = new Product((int) (Math.random() * 10000), "f230fh0g3", "New Bamboo Watch",
+        
+        Product newProduct = new Product(random.nextInt(10000), "f230fh0g3", "New Bamboo Watch",
                 "Product Description", "bamboo-watch.jpg", 100, "Accessories", 24, InventoryStatus.INSTOCK, 5);
         products1.add(newProduct);
 
         FacesMessage msg = new FacesMessage("New Product added", String.valueOf(newProduct.getId()));
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
-
 }

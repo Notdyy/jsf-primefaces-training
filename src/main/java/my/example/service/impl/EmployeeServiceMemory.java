@@ -1,17 +1,18 @@
-package my.example.service;
+package my.example.service.impl;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.enterprise.context.ApplicationScoped;
+
 import my.example.model.Employee;
+import my.example.service.EmployeeServiceable;
 
-public class EmployeeServiceMemory implements Serializable  {
+@ApplicationScoped
+public class EmployeeServiceMemory implements EmployeeServiceable  {
 
-	private static final long serialVersionUID = 1L;
-	
 	private static  Map<String, Employee> employeeMap = new HashMap<>();
 
 	public void add(Employee employee) {
@@ -27,7 +28,7 @@ public class EmployeeServiceMemory implements Serializable  {
 		}
 	}
 
-	public List<Employee> search(Employee employeeCriteria) {
+	public List<Employee> search(Employee empSearch) {
 		List<Employee> employeeList = new ArrayList<>();
 		for (Map.Entry<String, Employee> entry : employeeMap.entrySet()) {
 			employeeList.add(entry.getValue());

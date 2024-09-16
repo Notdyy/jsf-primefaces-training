@@ -26,18 +26,24 @@
 		<p:commandButton id="addPageBtn" value="add" update="@form"
 			action="#{crudBean.addBtnOnclick}" /> 
 
-		<p:dataTable value="#{crudBean.employeeList}" var="m" >
-			<p:ajax event="rowSelect" 
-				listener="#{crudBean.onRowSelect}" update="@form" />
+		<p:commandButton id="q_resetBtn" value="reset" update="@form" 
+			action="#{crudBean.resetBtnOnclick}" />
+
+		<p:dataTable value="#{crudBean.employeeList}" var="m" selectionMode="single" selection="#{crudBean.selectedMember}" rowKey="#{m.id}">
+			<p:ajax event="rowSelect"  listener="#{crudBean.onRowSelect}" update="@form" />
 			<p:column headerText="First">
 				#{m.firstName}</p:column>
 
 			<p:column headerText="Last">
 				#{m.lastName}</p:column>
+			<p:column headerText="Age">
+			#{crudBean.employeeEdit.getAge(m.birthDate)}
+			</p:column>
 				
 			<p:column headerText="Action">
-			 	<p:commandButton id="searchBtn" value="edit" update="@form"
-					action="#{crudBean.editBtnOnclick(m)}" />
+			 	<p:commandButton id="searchBtn" value="edit" update="@form" action="#{crudBean.editBtnOnclick(m)}">
+					<f:setPropertyActionListener target="#{crudBean.selectedMember}" value="#{m}"  />	
+				</p:commandButton>
 			</p:column>
 		</p:dataTable>
 	</p:panel>

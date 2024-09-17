@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.UUID;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Slf4j
+@AllArgsConstructor
 public class Employee implements Serializable {
 
 	/**
@@ -47,11 +49,9 @@ public class Employee implements Serializable {
 	    return null; 
 	}
 	
-	 // Clone method
-    public Employee(Employee other) {
-        this.id = other.id;
-        this.firstName = other.firstName;
-        this.lastName = other.lastName;
-        this.birthDate = other.birthDate;
-    }
+	 public Employee copy() {
+	        return new Employee(this.getId(), this.getFirstName(),this.getLastName(),this.getBirthDate());
+	 }
+
+
 }

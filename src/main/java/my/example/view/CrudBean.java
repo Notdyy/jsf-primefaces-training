@@ -45,6 +45,7 @@ public class CrudBean implements Serializable {
 
 		mode = "R";
 		employeeCriteria = new Employee();
+		employeeList = service.getEmployees(25);
 		employeeList = service.search(employeeCriteria);
 		log.debug("end init employeeEdit -> {}",employeeEdit);
 	}
@@ -69,7 +70,7 @@ public class CrudBean implements Serializable {
 	public void editBtnOnclick(Employee e) {
 		log.debug("begin editBtnOnclick employeeEdit -> {}",employeeEdit);
 		mode = "U";
-		employeeEdit = new Employee(e);
+		employeeEdit = e.copy();
 		log.debug("end editBtnOnclick employeeEdit -> {}",employeeEdit);
 	}
 
@@ -78,7 +79,7 @@ public class CrudBean implements Serializable {
 		this.selectedMember = event.getObject();
 		if (this.selectedMember != null) {
 			this.mode = "U";
-			this.employeeEdit = new Employee(this.selectedMember);
+			this.employeeEdit = this.selectedMember.copy();
 		}
 		log.debug("begin onRowSelect employeeEdit -> {}",employeeEdit);
 	}
@@ -97,7 +98,7 @@ public class CrudBean implements Serializable {
 
 				FacesContext.getCurrentInstance().addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "บันทึกข้อมูลเรียบร้อย"));
-				this.selectedMember = new Employee(employeeEdit);
+				this.selectedMember = this.employeeEdit.copy();
 			}
 			log.debug("end saveBtnOnclick employeeEdit -> {}",employeeEdit);
 		} catch (AgeUnderLimitException e) {
@@ -109,7 +110,7 @@ public class CrudBean implements Serializable {
 		try {
 			log.debug("begin updateBtnOnclick employeeEdit -> {}",employeeEdit);
 			if (this.employeeEdit.getAgeBean(this.employeeEdit.getBirthDate()).getYears() < 2) {
-				employeeEdit = new Employee(selectedMember);
+				employeeEdit = this.selectedMember.copy();
 				FacesContext.getCurrentInstance().addMessage(null,
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "อายุต้องมากกว่า 2 ปี"));
 				throw new AgeUnderLimitException("อายุต้องมากกว่า 2 ปี");
@@ -150,7 +151,7 @@ public class CrudBean implements Serializable {
 			break;
 		
 		case "U":
-			this.employeeEdit = new Employee(selectedMember);
+			this.employeeEdit = this.selectedMember.copy();
 			break;	
 	
 		case "R":

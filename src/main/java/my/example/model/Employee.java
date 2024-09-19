@@ -6,14 +6,12 @@ import java.time.Period;
 import java.util.UUID;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-@Getter
-@Setter
 @Slf4j
 @AllArgsConstructor
+@Data
 public class Employee implements Serializable {
 
 	/**
@@ -33,25 +31,20 @@ public class Employee implements Serializable {
 		id = UUID.randomUUID().toString();
 	}
 
-	public String getAge(LocalDate getbirthDateDisplay) {
-		if (getbirthDateDisplay != null) {
-			Period period = Period.between(getbirthDateDisplay, LocalDate.now());
-			return period.getYears() + " years " + period.getMonths() + " months " + "and " + period.getDays()
-					+ " days.";
-		}
-		return null;
-	}
-	
-	public Period getAgeBean(LocalDate birthDate) {
+	public Period getAge(LocalDate birthDate) {
 	    if (birthDate != null) {
 	        return Period.between(birthDate, LocalDate.now()); 
 	    }
 	    return null; 
 	}
 	
-	 public Employee copy() {
-	        return new Employee(this.getId(), this.getFirstName(),this.getLastName(),this.getBirthDate());
-	 }
+	 // Clone method
+    public Employee(Employee other) {
+        this.id = other.id;
+        this.firstName = other.firstName;
+        this.lastName = other.lastName;
+        this.birthDate = other.birthDate;
+    }
 
 
 }

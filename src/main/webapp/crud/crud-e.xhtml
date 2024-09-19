@@ -28,12 +28,11 @@
 			<p:outputLabel for="birthdate_e" value="BirthDay" />
 			<p:calendar id="birthdate_e" navigator="true"
 				value="#{crudBean.employeeEdit.birthDate}" autocomplete="on"
-				required="true" requiredMessage="กรุณากรอกข้อมูล" />
+				required="true" requiredMessage="กรุณากรอกข้อมูล" pattern="dd/MM/yyyy"/>
 			<p:message for="birthdate_e" />
 
 			<p:outputLabel value="Age" />
-			<p:outputLabel
-				value="#{crudBean.employeeEdit.getAge(crudBean.employeeEdit.birthDate)}" />
+			<p:outputLabel value="#{crudBean.employeeEdit.getAge(crudBean.employeeEdit.birthDate)}" converter="customDateTimeConverter" />
 		</p:panelGrid>
 
 		<p:commandButton id="saveBtn" value="create" update="@form"
@@ -49,10 +48,10 @@
 			rendered="#{crudBean.mode == 'U'}" />
 
 		<p:commandButton id="backPageBtn" value="Back" update="@form"
-			action="#{crudBean.backBtnOnclick}" immediate="true" />
+			action="#{crudBean.backBtnOnclick}" immediate="true"/>
 
 		<p:commandButton id="resetBtn" value="reset" update="@form" 
-			action="#{crudBean.resetBtnOnclick}" />
+			action="#{crudBean.resetBtnOnclick}" immediate="true"/>
 
 	</p:panel>
 </ui:composition>

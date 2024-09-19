@@ -23,15 +23,19 @@
 				<p:ajax event="keyup" listener="#{crudBean.searchBtnOnclick}" update="datatable"/>
 			</p:inputText>	
 		</p:panelGrid>
-
+		
 		<p:commandButton id="searchBtn" value="search" update="@form"
 			action="#{crudBean.searchBtnOnclick}"  />
-
+			
+		 
+		<h:panelGroup style="float: right ;">
 		<p:commandButton id="addPageBtn" value="add" update="@form"
-			action="#{crudBean.addBtnOnclick}" />
+			action="#{crudBean.addBtnOnclick}" style="background-color: green; color: white;" />
+
 
 		<p:commandButton id="q_resetBtn" value="reset" update="@form"
-			action="#{crudBean.resetBtnOnclick}" />
+			action="#{crudBean.resetBtnOnclick}" style="background-color: yellow; color: black;" />
+		</h:panelGroup>
 
 		<p:dataTable id="datatable" value="#{crudBean.employeeList}" var="m"
 			selectionMode="single" selection="#{crudBean.selectedMember}"
@@ -51,7 +55,7 @@
 
 			<p:column headerText="Action">
 				<p:commandButton id="searchBtn" value="edit" update="@form"
-					action="#{crudBean.editBtnOnclick(m)}">
+					action="#{crudBean.editBtnOnclick(m)}" style="background-color: green; color: white;">
 					<f:setPropertyActionListener target="#{crudBean.selectedMember}"
 						value="#{m}" />
 				</p:commandButton>

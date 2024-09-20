@@ -25,16 +25,16 @@
 		</p:panelGrid>
 		
 		<p:commandButton id="searchBtn" value="search" update="@form"
-			action="#{crudBean.searchBtnOnclick}"  />
+			action="#{crudBean.searchBtnOnclick}" styleClass="rounded-button" />
 			
 		 
 		<h:panelGroup style="float: right ;">
 		<p:commandButton id="addPageBtn" value="add" update="@form"
-			action="#{crudBean.addBtnOnclick}" style="background-color: green; color: white;" />
+			action="#{crudBean.addBtnOnclick}" styleClass="rounded-button ui-button-success" />
 
 
 		<p:commandButton id="q_resetBtn" value="reset" update="@form"
-			action="#{crudBean.resetBtnOnclick}" style="background-color: yellow; color: black;" />
+			action="#{crudBean.resetBtnOnclick}"  styleClass="rounded-button ui-button-warning" />
 		</h:panelGroup>
 
 		<p:dataTable id="datatable" value="#{crudBean.employeeList}" var="m"
@@ -55,7 +55,7 @@
 
 			<p:column headerText="Action">
 				<p:commandButton id="searchBtn" value="edit" update="@form"
-					action="#{crudBean.editBtnOnclick(m)}" style="background-color: green; color: white;">
+					action="#{crudBean.editBtnOnclick(m)}" styleClass="rounded-button ui-button-success">
 					<f:setPropertyActionListener target="#{crudBean.selectedMember}"
 						value="#{m}" />
 				</p:commandButton>

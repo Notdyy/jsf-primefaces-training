@@ -31,7 +31,7 @@
 		<my.javax.servlet.jstl>1.2</my.javax.servlet.jstl>
 		<my.commons-beanutils>1.9.4</my.commons-beanutils>
 		<my.org.hibernate.hibernate-core>5.6.6.Final</my.org.hibernate.hibernate-core>
-		<my.org.eclipse.persistence>2.5.2</my.org.eclipse.persistence>
+		<my.org.eclipse.persistence>2.7.8</my.org.eclipse.persistence>
 		<my.org.slf4j>1.7.32</my.org.slf4j>
 		<logback.version>1.2.3</logback.version>
 

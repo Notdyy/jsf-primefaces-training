@@ -3,6 +3,9 @@ package my.example.service.impl;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceContext;
 
 import my.example.model.Employee;
 import my.example.service.EmployeeServiceable;
@@ -11,11 +14,21 @@ import my.example.service.qulifier.Repository;
 @ApplicationScoped
 @Repository(name = Repository.DATABASE)
 public class EmployeeServiceDatabase implements EmployeeServiceable {
+	
+	@PersistenceContext
+	private EntityManager em;
+	private EntityTransaction transaction = em.getTransaction();
+
 
 	@Override
 	public void add(Employee employee) {
-		// TODO Auto-generated method stub
-		
+		try {
+			transaction.begin();
+			em.persist(employee);
+			transaction.commit();
+		} finally {
+			em.close();
+		}
 	}
 
 	@Override

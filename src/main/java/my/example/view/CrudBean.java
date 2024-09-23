@@ -48,10 +48,9 @@ public class CrudBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		mode = "R";
-		employeeCriteria = new Employee();
-		employeeList = service.getEmployees(1000);
-		employeeList = service.search(employeeCriteria);
-		PrimeFaces.current().ajax().update("formc:datatable");
+//		employeeCriteria = new Employee();
+//		employeeList = service.getEmployees(1000);
+//		employeeList = service.search(employeeCriteria);
 	}
 
 	public void searchBtnOnclick() {

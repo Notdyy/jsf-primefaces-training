@@ -13,9 +13,9 @@ import my.example.service.ProductService;
 
 @Named("dtBasicView")
 @ViewScoped
-public class BasicView implements Serializable{
-	
-	/**
+public class BasicView implements Serializable {
+
+    /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
@@ -28,7 +28,7 @@ public class BasicView implements Serializable{
     @PostConstruct
     public void init() {
         products = service.getProducts(10);
-    }	
+    }
 
     public List<Product> getProducts() {
         return products;
@@ -37,4 +37,5 @@ public class BasicView implements Serializable{
     public void setService(ProductService service) {
         this.service = service;
     }
+
 }

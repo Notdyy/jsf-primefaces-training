@@ -17,7 +17,6 @@ import my.example.service.ProductService;
 
 @Named("dtSortView")
 @ViewScoped
-
 public class SortView implements Serializable {
 
     /**

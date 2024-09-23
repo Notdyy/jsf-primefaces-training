@@ -43,7 +43,6 @@
 		<my.junit>4.13.1</my.junit>
 		<my.sqlite-jdbc>3.25.2</my.sqlite-jdbc>
 		<my.org.hsqldb>2.4.1</my.org.hsqldb>
-		<my.dbunit>2.7.3</my.dbunit>
 
 		<my.cdi-api>2.0.SP1</my.cdi-api>
 		<my.weld-servlet-shaded>3.1.9.Final</my.weld-servlet-shaded>
@@ -129,6 +128,7 @@
 			<version>${my.javax.el.el-api}</version>
 			<scope>compile</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jul-to-slf4j</artifactId>
@@ -215,38 +215,17 @@
 			<version>1</version>
 			<scope>compile</scope>
 		</dependency>
+		<!-- Faker -->
 		<dependency>
 			<groupId>com.github.javafaker</groupId>
 			<artifactId>javafaker</artifactId>
 			<version>1.0.2</version>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.dbunit</groupId>
-			<artifactId>dbunit</artifactId>
-			<version>${my.dbunit}</version>
-			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
 	</dependencies>
 
 
 	<build>
-		<resources>
-			<resource>
-				<directory>src/main/webapp/resources</directory>
-				<targetPath>
-					${project.build.directory}/${project.build.finalName}/resources</targetPath>
-				<includes>
-					<include>**/*.*</include>
-				</includes>
-			</resource>
-		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -295,7 +274,7 @@
 							<resources>
 								<resource>
 									<directory>
-										${basedir}/src/main/webapp
+										${basedir}/src/main/resources
 									</directory>
 									<includes>
 										<include>**/*</include>

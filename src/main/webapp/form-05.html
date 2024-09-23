@@ -30,7 +30,7 @@ function submitForm(){
 			
 			function( data ){
 				alert(data);
-				$( "#fullnameid" ).text(data);
+				$( "#fullnameid" ).text("Full Name : "+data);
 				
 			}
 	); 
@@ -45,8 +45,7 @@ function submitForm(){
 	  	<input id="lnameid"   type="text"   name="lname"><br>
 	  	<input id="submitBtn" type="button" value="Submit"><br>
 	  	<br>
-	  	<label for="fullnameid">Full Name :</label>
-	  	<label id="fullnameid" ></label>
+	  	<label id="fullnameid" for="fullnameid">Full Name :</label>
   	</form> 
 </body>
 </html>

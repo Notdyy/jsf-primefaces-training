@@ -14,12 +14,16 @@ import my.example.service.NameService;
 /**
  * Servlet implementation class TextResultServlet
  */
+
 @WebServlet("/html-result-servlet")
 public class HtmlResultServlet extends HttpServlet {
+	
+	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		NameService n = new NameService();
+		try {
 		Person p = new Person();
 		p.setFirstName(request.getParameter("fname"));
 		p.setLastName(request.getParameter("lname"));
@@ -32,11 +36,14 @@ public class HtmlResultServlet extends HttpServlet {
 		response.getWriter().append("<title>HTML Form</title>\r\n");
 		response.getWriter().append("</head>\r\n");
 		response.getWriter().append("<body>\r\n");
-		response.getWriter().append("	Your name is "+n.display(p)+"\r\n<br/>");
-		response.getWriter().append("	<a href=\"form-02.html\"> Back </a>\r\n");
+		response.getWriter().append("Your name is "+n.display(p)+"\r\n<br/>" );
+		response.getWriter().append("<a href=\"form-02.html\"> Back </a>\r\n");
 		response.getWriter().append("</body>\r\n");
 		response.getWriter().append("</html>");
 		response.getWriter().close();
+		} catch (IOException e) {
+			// do nothing
+		}
 	}
 	
 	@Override

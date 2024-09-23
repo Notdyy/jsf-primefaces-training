@@ -13,9 +13,11 @@ import com.github.javafaker.Faker;
 import lombok.extern.slf4j.Slf4j;
 import my.example.model.Employee;
 import my.example.service.EmployeeServiceable;
+import my.example.service.qulifier.Repository;
 
 @Slf4j
 @ApplicationScoped
+@Repository(name = Repository.MEMORY)
 public class EmployeeServiceMemory implements EmployeeServiceable {
 
 	private static Map<String, Employee> employeeMap = new HashMap<>();

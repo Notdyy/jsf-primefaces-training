@@ -22,7 +22,6 @@ import my.example.service.ProductService;
 @ViewScoped
 @Getter
 @Setter
-
 public class SelectionView implements Serializable {
 
     /**

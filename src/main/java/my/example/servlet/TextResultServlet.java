@@ -17,16 +17,20 @@ import my.example.service.NameService;
 @WebServlet("/text-result-servlet")
 public class TextResultServlet extends HttpServlet {
 	@Override
-	protected void doPost(HttpServletRequest request, 
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		NameService n = new NameService();
-		
-		Person p = new Person();
-		p.setFirstName(request.getParameter("fname"));
-		p.setLastName(request.getParameter("lname"));
-		
-		response.getWriter().append(n.display(p));
-		response.getWriter().close();
+		try {
+			Person p = new Person();
+			p.setFirstName(request.getParameter("fname"));
+			p.setLastName(request.getParameter("lname"));
+
+			response.getWriter().append(n.display(p));
+			response.getWriter().close();
+		} catch (IOException e) {
+			// do nothing
+		}
+	
 	}
 
 

@@ -53,8 +53,18 @@ public class AddRowView implements Serializable {
 
     public void onAddNew() {
         
-        Product newProduct = new Product(random.nextInt(10000), "f230fh0g3", "New Bamboo Watch",
-                "Product Description", "bamboo-watch.jpg", 100, "Accessories", 24, InventoryStatus.INSTOCK, 5);
+    	Product newProduct = Product.builder()
+                					.id(random.nextInt(10000))
+                					.code("f230fh0g3")
+                					.name("New Bamboo Watch")
+                					.description("Product Description")
+                					.image("bamboo-watch.jpg")
+                					.price(100)
+                					.category("Accessories")
+                					.quantity(24)
+                					.inventoryStatus(InventoryStatus.INSTOCK)
+                					.rating(5)
+                					.build();
         products1.add(newProduct);
 
         FacesMessage msg = new FacesMessage("New Product added", String.valueOf(newProduct.getId()));

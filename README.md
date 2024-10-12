@@ -28,12 +28,21 @@
 |             | - Java Faker for mock data           |
 
 ## Dependencies
-โปรเจคนี้ใช้ไลบรารีต่าง ๆ เช่น:
-- PrimeFaces
-- Hibernate
-- CDI
-- SLF4J
-- Logback
+This project uses various libraries, including:
+
+- **PrimeFaces**: UI component library for JSF
+- **Hibernate**: ORM framework for database interaction
+- **CDI (Contexts and Dependency Injection)**: For dependency injection
+- **SLF4J**: Simple Logging Facade for Java
+- **Logback**: Logging framework
+- **Java Faker**: For generating fake data
+- **FontAwesome**: Icon toolkit
+- **PrimeFlex**: CSS utility framework
+- **JUnit**: For unit testing
+- **HSQLDB**: In-memory database for testing
+- **SQLite JDBC**: SQLite database access for Java
+- **Lombok**: Library for reducing boilerplate code in Java
+
 
 ## Getting Started
 1. Clone this repository:

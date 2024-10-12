@@ -1,17 +1,39 @@
+# jsf-primefaces - Training
+
+โปรเจคนี้มีไว้เพื่อศึกษาเกี่ยวกับการพัฒนาเว็บแอปพลิเคชันด้วย JSF และ PrimeFaces
+
+## Badges
 [![Maven](https://img.shields.io/maven-central/v/org.primefaces/primefaces.svg)](https://repo.maven.apache.org/maven2/org/primefaces/primefaces/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-# jsf-primefaces - training
+## Project Information
+- **Group ID**: my.example
+- **Artifact ID**: jsf-primefaces
+- **Version**: 0.0.1-SNAPSHOT
+- **Packaging**: WAR
+- **Java Version**: 1.8
 
-โปรเจคนี้มีไว้เพื่อศึกษา
+## Features
+| Version     | Description                          |
+|-------------|--------------------------------------|
+| 0.0.0-demo  | Final version for demo               |
+|             | - JSF with PrimeFaces 13.0.7         |
+|             | - CDI with @Qualifier                |
+|             | - DAO implementation                 |
+|             | - Exception handling                 |
+|             | - Layered package structure          |
+|             | - Connect to DB using JNDI           |
+|             | - Java Faker for mock data           |
 
-|Version|Description|
-|-------|-----------|
-|0.0.0-demo| final | อัพเวอร์ชั่น demo
-|         |- jsf-primefaces 13.0.7
-|         |- cdi && @Qualifier
-|         |- dao
-|         |- exception handling
-|         |- package by layer
-|         |- To connect to DB using JNDI
-|         |- java facker mock data
+## Dependencies
+โปรเจคนี้ใช้ไลบรารีต่าง ๆ เช่น:
+- PrimeFaces
+- Hibernate
+- CDI
+- SLF4J
+- Logback
+
+## Getting Started
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/your-repo-url.git

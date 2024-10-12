@@ -16,7 +16,7 @@ import org.primefaces.PrimeFaces;
 
 import lombok.extern.slf4j.Slf4j;
 import my.example.model.Product;
-import my.example.service.ProductService;
+import my.example.service.ProductServiceable;
 
 @Slf4j
 @Named
@@ -34,13 +34,12 @@ public class CrudView implements Serializable {
     private static String[] messages = {"form:messages", "form:dt-products"};
 
     @Inject
-    private ProductService productService;
+    private ProductServiceable productService;
 
     @PostConstruct
     public void init() {
         this.products = this.productService.getClonedProducts(100);
         this.selectedProducts = new ArrayList<>();
-        log.debug("testttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt");
     }
 
     public List<Product> getProducts() {
@@ -101,6 +100,7 @@ public class CrudView implements Serializable {
     public boolean hasSelectedProducts() {
         return this.selectedProducts != null && !this.selectedProducts.isEmpty();
     }
+
 
     public void deleteSelectedProducts() {
         this.products.removeAll(this.selectedProducts);

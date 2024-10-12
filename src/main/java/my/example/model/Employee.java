@@ -5,20 +5,17 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
-@Entity
-@Table(name = "DATA_EMPLOYEE")
 public class Employee implements Serializable {
 
 	/**
@@ -26,19 +23,14 @@ public class Employee implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name = "ID")
-	private String id;
-	@Column(name = "FNAME")
+	@Builder.Default
+	private String id = UUID.randomUUID().toString();
+	
 	private String firstName;
-	@Column(name = "LNAME")
+	
 	private String lastName;
-	@Column(name = "BIRTHDATE")
+	
 	private LocalDate birthDate;
-
-	public Employee() {
-		id = UUID.randomUUID().toString();
-	}
 
 	public Period getAge(LocalDate birthDate) {
 	    if (birthDate != null) {

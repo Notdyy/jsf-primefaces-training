@@ -20,10 +20,10 @@ $( document ).ready( window_onload );
 <script type="text/javascript">
 function submitForm(){
 	
-	fnameStr = $("#myForm").find( "input[name='fname']" ).val();
-	lnameStr = $("#myForm").find( "input[name='lname']" ).val();
+	const fnameStr = $("#myForm").find( "input[name='fname']" ).val();
+	const lnameStr = $("#myForm").find( "input[name='lname']" ).val();
  
-	urlStr = "http://localhost:8080/jsf-primefaces/text-result-servlet";
+	const urlStr = "http://localhost:8080/jsf-primefaces/text-result-servlet";
 	alert("hello word");
 	$.post(
 			urlStr,{ "fname":fnameStr , "lname":lnameStr }, 

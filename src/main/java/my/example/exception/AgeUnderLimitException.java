@@ -1,13 +1,13 @@
 package my.example.exception;
 
-public class AgeUnderLimitException extends Exception {
+public class AgeUnderLimitException extends BaseException {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public AgeUnderLimitException(String message) {
-		super(message);
+	public AgeUnderLimitException(String code) {
+		super(code);
 	}
 }

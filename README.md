@@ -1,2 +1,1 @@
-"# jsf-primefaces" 
-"# jsf-primefaces" 
+jsf-primefaces - training

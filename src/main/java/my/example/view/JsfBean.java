@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import my.example.model.Person;
-import my.example.service.NameService;
+import my.example.service.NameServiceable;
 
 @SessionScoped
 @Named("jsfBean")
@@ -29,8 +30,10 @@ public class JsfBean  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Person person= new Person();
-	private NameService service = new NameService();
 	private String fullName;
+	
+	@Inject
+	private NameServiceable service;
 	
 	public String returnPage() {
 		this.fullName = service.display(person);

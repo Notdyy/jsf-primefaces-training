@@ -2,9 +2,8 @@ package my.example.view;
 
 import java.io.Serializable;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -25,17 +24,13 @@ import my.example.service.qulifier.Repository;
 @Getter
 @ViewScoped
 @Named
-public class CrudBean implements Serializable {
+public class CrudBean extends ViewBase implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	 private static final String AGEUNDER_LIMIT = "อายุต้องมากกว่า 2 ปี";
-	 private static final String RECORFD_COMPELETE = "บันทึกข้อมูลเรียบร้อย";
-	 private static final String DELETE_COMPELETE = "ลบข้อมูลสำเร็จ";
 
-	private String mode;
 	private Employee employeeCriteria;
 	private Employee employeeEdit;
 	private Employee selectedMember;
@@ -47,10 +42,10 @@ public class CrudBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		mode = "R";
-//		employeeCriteria = new Employee();
-//		employeeList = service.getEmployees(1000);
-//		employeeList = service.search(employeeCriteria);
+		this.setMode(READ_MODE);
+		employeeCriteria = new Employee();
+		employeeList = service.getEmployees(1000);
+		employeeList = service.search(employeeCriteria);
 	}
 
 	public void searchBtnOnclick() {
@@ -61,7 +56,7 @@ public class CrudBean implements Serializable {
 
 	public void addBtnOnclick() {
 		log.debug("begin addBtnOnclick employeeEdit -> {}", employeeEdit);
-		this.mode = "C";
+		this.setMode(CREATE_MODE);
 		employeeEdit = new Employee();
 		log.debug("end addBtnOnclick employeeEdit -> {}",employeeEdit);
 
@@ -69,7 +64,7 @@ public class CrudBean implements Serializable {
 
 	public void editBtnOnclick(Employee p) {
 		log.debug("begin editBtnOnclick employeeEdit -> {}", employeeEdit);
-		mode = "U";
+		this.setMode(UPDATE_MODE);
 		employeeEdit = new Employee(p);
 		log.debug("end editBtnOnclick, {}", employeeEdit);
 	}
@@ -78,21 +73,17 @@ public class CrudBean implements Serializable {
 		try {
 			log.debug("begin saveBtnOnclick employeeEdit -> {}, selectedMember -> {}", employeeEdit, selectedMember);
 			if (this.employeeEdit.getAge(this.employeeEdit.getBirthDate()).getYears() < 2) {
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", AGEUNDER_LIMIT));
+				messageError();
 				throw new AgeUnderLimitException("Age must be more than 2 years.");
 			}
 			service.add(employeeEdit);
-			mode = "U";
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", RECORFD_COMPELETE));
+			this.setMode(UPDATE_MODE);
+			messageCompelete();
 			this.selectedMember = new Employee(employeeEdit);
 			PrimeFaces.current().ajax().update("formc");
 		} catch (AgeUnderLimitException e) {
 			log.error("error employeeEdit {}", employeeEdit);
 			log.error("error Exception {}", e);
-		} finally {
-			log.debug("end saveBtnOnclick, {}", employeeEdit);
 		}
 	}
 
@@ -100,14 +91,12 @@ public class CrudBean implements Serializable {
 		try {
 			log.debug("begin updateBtnOnclick employeeEdit -> {}, selectedMember -> {}", employeeEdit, selectedMember);
 			if (this.employeeEdit.getAge(this.employeeEdit.getBirthDate()).getYears() < 2) {
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", AGEUNDER_LIMIT));
+				messageError();
 				employeeEdit = new Employee(selectedMember);
 				throw new AgeUnderLimitException("Age must be more than 2 years.");
 			}
 			service.update(employeeEdit);
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", RECORFD_COMPELETE));
+			messageEditCompelete();
 		} catch (AgeUnderLimitException e) {
 			log.error("error employeeEdit {}", employeeEdit);
 			log.error("error Exception {}", e);
@@ -120,28 +109,27 @@ public class CrudBean implements Serializable {
 	public void deleteBtnOnclick() {
 		log.debug("begin deleteBtnOnclick employeeEdit -> {}", employeeEdit);
 		service.delete(employeeEdit.getId());
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", DELETE_COMPELETE));
+		messageDeleteCompelete();
 		log.debug("end deleteBtnOnclick, {}", employeeEdit);
 	}
 
 	public void backBtnOnclick() {
-		log.debug("begin backBtnOnclick mode -> {}", mode); // * เช้าเป็น R
-		mode = "R";
+		log.debug("begin backBtnOnclick mode -> {}", mode);
+		this.setMode(READ_MODE);
 		employeeList = service.search(employeeCriteria);
 		log.debug("end backBtnOnclick, {}", mode);
 	}
 
 	public void resetBtnOnclick() {
-		log.debug("begin resetBtnOnclick mode -> {}", mode); // * เช้าเป็น R
+		log.debug("begin resetBtnOnclick mode -> {}", mode);
 		switch (mode) {
-		case "C":
+		case CREATE_MODE:
 			this.employeeEdit = new Employee();
 			break;
-		case "U":
+		case UPDATE_MODE:
 			this.employeeEdit = new Employee(selectedMember);
 			break;
-		case "R":
+		case READ_MODE:
 			this.employeeCriteria = new Employee();
 			employeeList = service.search(employeeCriteria);
 			break;
@@ -156,7 +144,7 @@ public class CrudBean implements Serializable {
 		log.debug("begin onRowSelect employeeEdit -> {}",employeeEdit);
 		this.selectedMember = event.getObject();
 		if (this.selectedMember != null) {
-			this.mode = "U";
+			this.setMode(UPDATE_MODE);
 			this.employeeEdit = new Employee(selectedMember);
 		}
 		log.debug("begin onRowSelect employeeEdit -> {}",employeeEdit);

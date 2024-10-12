@@ -84,7 +84,7 @@
                 </p:commandButton>
                 <p:commandButton id="delete-products-button" value="#{crudView.deleteButtonMessage}"
                     icon="pi pi-trash" actionListener="#{crudView.deleteSelectedProducts}"
-                    styleClass="ui-button-danger" disabled="#{!crudView.hasSelectedProducts()}" update="@this">
+                    styleClass="ui-button-danger" disabled="#{crudView.hasSelectedProducts()}" update="@this">
                     <p:confirm header="Confirmation" message="Delete the selected products?"
                         icon="pi pi-exclamation-triangle" />
                 </p:commandButton>

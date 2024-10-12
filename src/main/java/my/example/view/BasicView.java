@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import my.example.model.Product;
-import my.example.service.ProductService;
+import my.example.service.ProductServiceable;
 
 @Named("dtBasicView")
 @ViewScoped
@@ -23,7 +23,7 @@ public class BasicView implements Serializable {
 	private List<Product> products;
 
     @Inject
-    private ProductService service;
+    private ProductServiceable service;
 
     @PostConstruct
     public void init() {
@@ -34,7 +34,7 @@ public class BasicView implements Serializable {
         return products;
     }
 
-    public void setService(ProductService service) {
+    public void setService(ProductServiceable service) {
         this.service = service;
     }
 

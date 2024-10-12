@@ -2,6 +2,7 @@ package my.example.servlet;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import my.example.model.Person;
-import my.example.service.NameService;
+import my.example.service.NameServiceable;
 
 /**
  * Servlet implementation class TextResultServlet
@@ -18,11 +19,13 @@ import my.example.service.NameService;
 @WebServlet("/html-result-servlet")
 public class HtmlResultServlet extends HttpServlet {
 	
+	@Inject
+	private NameServiceable n;
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		NameService n = new NameService();
+		
 		try {
 		Person p = new Person();
 		p.setFirstName(request.getParameter("fname"));

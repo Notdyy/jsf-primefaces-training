@@ -23,20 +23,20 @@ public class EmployeeServiceMemory implements EmployeeServiceable {
 	private static Map<String, Employee> employeeMap = new HashMap<>();
 
 	private static final Faker faker = new Faker();
-
+	
+	@Override
 	public void add(Employee employee) {
 		employeeMap.put(employee.getId(), employee);
 	}
 
-	public int update(Employee employee) {
+	@Override
+	public void update(Employee employee) {
 		if (employeeMap.containsKey(employee.getId())) {
 			employeeMap.put(employee.getId(), employee);
-			return 1;
-		} else {
-			return 0;
 		}
 	}
-
+	
+	@Override
 	public List<Employee> search(Employee empSearch) {
 		List<Employee> employeeList = new ArrayList<>();
 		String firstName = empSearch.getFirstName() != null ? empSearch.getFirstName().toLowerCase() : "";
@@ -51,13 +51,11 @@ public class EmployeeServiceMemory implements EmployeeServiceable {
 		}
 		return employeeList;
 	}
-
-	public int delete(String id) {
+	
+	@Override
+	public void delete(String id) {
 		if (employeeMap.containsKey(id)) {
 			employeeMap.remove(id);
-			return 1;
-		} else {
-			return 0;
 		}
 	}
 

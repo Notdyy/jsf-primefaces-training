@@ -15,7 +15,7 @@ import org.primefaces.event.RowEditEvent;
 
 import my.example.model.InventoryStatus;
 import my.example.model.Product;
-import my.example.service.ProductService;
+import my.example.service.ProductServiceable;
 
 @Named("dtEditView")
 @ViewScoped
@@ -30,7 +30,7 @@ public class EditView implements Serializable {
     private List<Product> products3;
 
     @Inject
-    private ProductService service;
+    private ProductServiceable service;
 
     @PostConstruct
     public void init() {
@@ -55,7 +55,7 @@ public class EditView implements Serializable {
         return InventoryStatus.values();
     }
 
-    public void setService(ProductService service) {
+    public void setService(ProductServiceable service) {
         this.service = service;
     }
 

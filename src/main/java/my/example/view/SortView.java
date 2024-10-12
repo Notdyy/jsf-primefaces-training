@@ -13,7 +13,7 @@ import org.primefaces.model.SortMeta;
 import org.primefaces.model.SortOrder;
 
 import my.example.model.Product;
-import my.example.service.ProductService;
+import my.example.service.ProductServiceable;
 
 @Named("dtSortView")
 @ViewScoped
@@ -29,7 +29,7 @@ public class SortView implements Serializable {
     private List<SortMeta> sortBy;
 
     @Inject
-    private ProductService service;
+    private ProductServiceable service;
 
     @PostConstruct
     public void init() {
@@ -66,7 +66,7 @@ public class SortView implements Serializable {
         return sortBy;
     }
 
-    public void setService(ProductService service) {
+    public void setService(ProductServiceable service) {
         this.service = service;
     }
 }

@@ -11,9 +11,9 @@ public interface EmployeeServiceable {
 
 	public List<Employee> search(Employee empSearch);
 
-	public int delete(String id);
+	public void delete(String id);
 
-	public int update(Employee employee);
+	public void update(Employee employee);
 
 	public List<Employee> getEmployees(int size);
 }

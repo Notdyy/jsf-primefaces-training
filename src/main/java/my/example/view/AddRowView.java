@@ -3,17 +3,19 @@ package my.example.view;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import org.primefaces.event.RowEditEvent;
 
 import my.example.model.InventoryStatus;
 import my.example.model.Product;
-import my.example.service.ProductService;
+import my.example.service.ProductServiceable;
 
 @Named("dtAddRowView")
 @ViewScoped
@@ -24,7 +26,7 @@ public class AddRowView implements Serializable {
     private List<Product> products1;
 
     @Inject
-    private ProductService service;
+    private ProductServiceable service;
 
     private Random random = new Random(); 
 
@@ -37,7 +39,7 @@ public class AddRowView implements Serializable {
         return products1;
     }
 
-    public void setService(ProductService service) {
+    public void setService(ProductServiceable service) {
         this.service = service;
     }
 

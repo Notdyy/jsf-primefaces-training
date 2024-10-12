@@ -28,19 +28,18 @@ public class Product implements Serializable {
 	private int rating;
 	private List<Order> orders;
 
-	@Override
-	public Product clone() {
-		return Product.builder().id(this.id)
-								.code(this.code)
-								.name(this.name)
-								.description(this.description)
-								.image(this.image)
-								.price(this.price)
-								.category(this.category)
-								.quantity(this.quantity)
-								.inventoryStatus(this.inventoryStatus)
-								.rating(this.rating)
-								.orders(this.orders)
-								.build();
+	// Copy Constructor
+	public Product(Product other) {
+		this.id = other.id;
+		this.code = other.code;
+		this.name = other.name;
+		this.description = other.description;
+		this.image = other.image;
+		this.price = other.price;
+		this.category = other.category;
+		this.quantity = other.quantity;
+		this.inventoryStatus = other.inventoryStatus;
+		this.rating = other.rating;
+		this.orders = other.orders;
 	}
 }

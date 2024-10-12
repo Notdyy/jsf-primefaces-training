@@ -36,7 +36,7 @@
 ## Getting Started
 1. Clone this repository:
    ```bash
-   git clone https://github.com/your-repo-url.git
+   git clone https://github.com/Notdyy/jsf-primefaces-training.git
    
 ### License
 ***

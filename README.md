@@ -3,7 +3,7 @@
 โปรเจคนี้มีไว้เพื่อศึกษาเกี่ยวกับการพัฒนาเว็บแอปพลิเคชันด้วย JSF และ PrimeFaces
 
 ## Badges
-[![Maven](https://img.shields.io/maven-central/v/org.primefaces/primefaces.svg)](https://repo.maven.apache.org/maven2/org/primefaces/primefaces/)
+[![Maven](https://img.shields.io/maven-central/v/org.primefaces/primefaces/13.0.7.svg)](https://repo.maven.apache.org/maven2/org/primefaces/primefaces/13.0.7/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Project Information

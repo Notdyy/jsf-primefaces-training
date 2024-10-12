@@ -37,3 +37,7 @@
 1. Clone this repository:
    ```bash
    git clone https://github.com/your-repo-url.git
+   
+### License
+***
+Licensed under the MIT License.

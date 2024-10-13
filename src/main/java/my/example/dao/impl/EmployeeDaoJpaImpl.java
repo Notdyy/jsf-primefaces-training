@@ -36,7 +36,8 @@ public class EmployeeDaoJpaImpl extends AbstractJpa<EmployeeData> implements Emp
 	}
 	
 	// ---- implement DAO method
-
+	
+	@Override
 	public List<EmployeeData> findByName(Employee emp) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT e FROM EmployeeData e ");
@@ -62,6 +63,15 @@ public class EmployeeDaoJpaImpl extends AbstractJpa<EmployeeData> implements Emp
 		}
 
 		return query.getResultList();
+	}
+	
+	@Override
+	public int countDataDb() {
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("SELECT COUNT(e) FROM EmployeeData e ");
+	    TypedQuery<Long> query = this.getEm().createQuery(sb.toString(), Long.class);
+	    Long count = query.getSingleResult();
+	    return count != null ? count.intValue() : 0;
 	}
 
 

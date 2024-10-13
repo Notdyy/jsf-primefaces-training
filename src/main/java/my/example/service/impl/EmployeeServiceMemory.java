@@ -1,6 +1,5 @@
 package my.example.service.impl;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,12 +7,11 @@ import java.util.Map;
 
 import javax.enterprise.context.ApplicationScoped;
 
-import com.github.javafaker.Faker;
-
 import lombok.extern.slf4j.Slf4j;
 import my.example.model.Employee;
 import my.example.service.EmployeeServiceable;
 import my.example.service.qulifier.Repository;
+import my.example.utils.EmployeeUtils;
 
 @Slf4j
 @ApplicationScoped
@@ -21,8 +19,6 @@ import my.example.service.qulifier.Repository;
 public class EmployeeServiceMemory implements EmployeeServiceable {
 
 	private static Map<String, Employee> employeeMap = new HashMap<>();
-
-	private static final Faker faker = new Faker();
 	
 	@Override
 	public void add(Employee employee) {
@@ -66,13 +62,7 @@ public class EmployeeServiceMemory implements EmployeeServiceable {
 		int maxAge = 100;
 		if (size > employeeList.size()) {
 			for (int i = employeeList.size(); i < size; i++) {
-				int randomAge = faker.number().numberBetween(minAge, maxAge);
-				LocalDate hireDate = LocalDate.now().minusYears(randomAge)
-						.withDayOfYear(faker.number().numberBetween(1, 365));
-				Employee employeeMock = new Employee();
-				employeeMock.setFirstName(faker.name().firstName());
-				employeeMock.setLastName(faker.name().lastName());
-				employeeMock.setBirthDate(hireDate);
+				Employee employeeMock = EmployeeUtils.createMockEmployee(minAge, maxAge);
 				employeeList.add(employeeMock);
 				employeeMap.put(employeeMock.getId(), employeeMock);
 			}

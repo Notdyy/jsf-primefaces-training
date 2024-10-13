@@ -16,16 +16,20 @@
 - **Java Version**: 1.8
 
 ## Features
-| Version     | Description                          |
-|-------------|--------------------------------------|
-| 0.0.0-demo  | Final version for demo               |
-|             | - JSF with PrimeFaces 13.0.7         |
-|             | - CDI with @Qualifier                |
-|             | - DAO implementation                 |
-|             | - Exception handling                 |
-|             | - Layered package structure          |
-|             | - Connect to DB using JNDI           |
-|             | - Java Faker for mock data           |
+| Version     | Description                          	   |
+|-------------|--------------------------------------------|
+| 0.0.1-RC1   | RC1 version                          	   |
+|             | - Implemented LocalDateToTimestampConverter|
+|             | - Updated Faker for mock data utilities    |
+| 0.0.0-demo  | Final version for demo                     |
+|             | - Built with JSF and PrimeFaces 13.0.7     |
+|             | - Integrated CDI with @Qualifier      	   |
+|             | - Developed DAO implementation             |
+|             | - Enhanced exception handling              |
+|             | - Utilized layered package structure   	   |
+|             | - Established database connection via JNDI |
+|             | - Incorporated Java Faker for mock data    |
+
 
 ## Dependencies
 This project uses various libraries, including:

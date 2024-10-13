@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -12,11 +13,14 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import my.example.converter.LocalDateToTimestampConverter;
 
 @Slf4j
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "DATA_EMPLOYEE")
@@ -28,8 +32,9 @@ public class EmployeeData implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "ID")
-	private String id;
+	@Column(name = "id")
+	@Builder.Default
+	private String id = UUID.randomUUID().toString();
 	
 	@Column(name = "FNAME")
 	private String firstName;
@@ -38,11 +43,8 @@ public class EmployeeData implements Serializable {
 	private String lastName;
 	
 	@Column(name = "BIRTHDATE")
+	@Convert(converter = LocalDateToTimestampConverter.class)
 	private LocalDate birthDate;
-
-	public EmployeeData() {
-		id = UUID.randomUUID().toString();
-	}
 
 
 }

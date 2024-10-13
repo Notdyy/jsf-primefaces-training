@@ -18,6 +18,8 @@
 ## Features
 | Version     | Description                          	   |
 |-------------|--------------------------------------------|
+| 0.0.1-RC2   | RC2 version                          	   |
+|             | - update lazy EmployeeServiceMemory		   |
 | 0.0.1-RC1   | RC1 version                          	   |
 |             | - Implemented LocalDateToTimestampConverter|
 |             | - Updated Faker for mock data utilities    |

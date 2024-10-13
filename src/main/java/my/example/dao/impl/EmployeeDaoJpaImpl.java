@@ -1,16 +1,26 @@
 package my.example.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
+import org.apache.commons.lang3.StringUtils;
+import org.primefaces.model.FilterMeta;
 
 import my.example.dao.EmployeeDaoServiceable;
 import my.example.entity.EmployeeData;
 import my.example.jpa.AppDbService;
 import my.example.model.Employee;
+import my.example.model.EmployeeCriteria;
 
 @ApplicationScoped
 public class EmployeeDaoJpaImpl extends AbstractJpa<EmployeeData> implements EmployeeDaoServiceable {
@@ -72,6 +82,36 @@ public class EmployeeDaoJpaImpl extends AbstractJpa<EmployeeData> implements Emp
 	    TypedQuery<Long> query = this.getEm().createQuery(sb.toString(), Long.class);
 	    Long count = query.getSingleResult();
 	    return count != null ? count.intValue() : 0;
+	}
+
+	@Override
+	public Long count(EmployeeCriteria employeeCriteria, Map<String, FilterMeta> filterBy) {
+		CriteriaBuilder cb = this.getEm().getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        List<Predicate> predicates = new ArrayList<>();
+		Root<EmployeeData> adj = cq.from(EmployeeData.class);
+		
+		cq.multiselect(cb.count(adj));
+		
+		if (employeeCriteria.getId() != null) {
+			predicates.add(cb.equal(adj.get("id"), employeeCriteria.getId()));
+		}
+		if (StringUtils.isNotEmpty(employeeCriteria.getFirstName())) {
+		    predicates.add(cb.equal(adj.get("firstName"), employeeCriteria.getFirstName()));
+		}
+		if (StringUtils.isNotEmpty(employeeCriteria.getLastName())) {
+		    predicates.add(cb.equal(adj.get("lastName"), employeeCriteria.getLastName()));
+		}
+		if (employeeCriteria.getBirthDate() != null) {
+	        predicates.add(cb.equal(adj.get("birthDate"), employeeCriteria.getBirthDate()));
+	    }
+
+		
+		
+		cq.where(predicates.toArray(new Predicate[] {}));
+		TypedQuery<Long> query = getEm().createQuery(cq);
+		
+		return query.getSingleResult();
 	}
 
 

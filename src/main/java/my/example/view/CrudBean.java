@@ -16,6 +16,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import my.example.exception.AgeUnderLimitException;
 import my.example.model.Employee;
+import my.example.model.EmployeeCriteria;
 import my.example.service.EmployeeServiceable;
 import my.example.service.qulifier.Repository;
 
@@ -35,21 +36,28 @@ public class CrudBean extends ViewBase implements Serializable {
 	private Employee employeeEdit;
 	private Employee selectedMember;
 	private List<Employee> employeeList;
+	
+	private EmployeeCriteria employeeCriterias = EmployeeCriteria.builder().build();
 
 	@Inject
-	@Repository(name = Repository.DATABASE)
+	@Repository(name = Repository.MEMORY)
 	private EmployeeServiceable service;
+	
+	@Inject
+	private LazyEmployeeDataModel lazyEmployeeModel;
 
 	@PostConstruct
 	public void init() {
 		this.setMode(READ_MODE);
 		employeeCriteria = new Employee();
-		employeeList = service.getEmployees(1000);
-		employeeList = service.search(employeeCriteria);
+		lazyEmployeeModel.setEmployeeCriteria(service.getEmployeesCriterias(1000));
+		lazyEmployeeModel.setEmployeeCriteria(employeeCriterias);
+//		employeeList = service.search(employeeCriteria);
 	}
 
 	public void searchBtnOnclick() {
 		log.debug("begin searchBtnOnclick employeeList -> {}", employeeList);
+		lazyEmployeeModel.setEmployeeCriteria(employeeCriterias);
 		employeeList = service.search(employeeCriteria);
 		log.debug("end searchBtnOnclick employeeEdit -> {}",employeeEdit);
 	}

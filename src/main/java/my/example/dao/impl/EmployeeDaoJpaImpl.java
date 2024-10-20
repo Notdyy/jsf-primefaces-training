@@ -102,11 +102,11 @@ public class EmployeeDaoJpaImpl extends AbstractJpa<EmployeeData> implements Emp
 		if (employeeCriteria.getId() != null) {
 			predicates.add(cb.equal(adj.get("id"), employeeCriteria.getId()));
 		}
-		if (StringUtils.isNotEmpty(employeeCriteria.getFirstName())) {
-		    predicates.add(cb.equal(adj.get(firstNameParam), employeeCriteria.getFirstName()));
+		if (StringUtils.isNotBlank(employeeCriteria.getFirstName())) {
+			predicates.add(cb.like(cb.lower(adj.get(firstNameParam)), employeeCriteria.getFirstName().toLowerCase().concat("%")));
 		}
-		if (StringUtils.isNotEmpty(employeeCriteria.getLastName())) {
-		    predicates.add(cb.equal(adj.get(lastNameParam), employeeCriteria.getLastName()));
+		if (StringUtils.isNotBlank(employeeCriteria.getLastName())) {
+			predicates.add(cb.like(cb.lower(adj.get(lastNameParam)), employeeCriteria.getLastName().toLowerCase().concat("%")));
 		}
 		if (employeeCriteria.getBirthDate() != null) {
 	        predicates.add(cb.equal(adj.get("birthDate"), employeeCriteria.getBirthDate()));
@@ -139,11 +139,11 @@ public class EmployeeDaoJpaImpl extends AbstractJpa<EmployeeData> implements Emp
         if (employeeCriteria.getId() != null) {
 			predicates.add(cb.equal(adj.get("id"), employeeCriteria.getId()));
 		}
-		if (StringUtils.isNotEmpty(employeeCriteria.getFirstName())) {
-		    predicates.add(cb.equal(adj.get(firstNameParam), employeeCriteria.getFirstName()));
+		if (StringUtils.isNotBlank(employeeCriteria.getFirstName())) {
+			predicates.add(cb.like(cb.lower(adj.get(firstNameParam)), employeeCriteria.getFirstName().toLowerCase().concat("%")));
 		}
-		if (StringUtils.isNotEmpty(employeeCriteria.getLastName())) {
-		    predicates.add(cb.equal(adj.get(lastNameParam), employeeCriteria.getLastName()));
+		if (StringUtils.isNotBlank(employeeCriteria.getLastName())) {
+			predicates.add(cb.like(cb.lower(adj.get(lastNameParam)), employeeCriteria.getLastName().toLowerCase().concat("%")));
 		}
 		if (employeeCriteria.getBirthDate() != null) {
 	        predicates.add(cb.equal(adj.get("birthDate"), employeeCriteria.getBirthDate()));

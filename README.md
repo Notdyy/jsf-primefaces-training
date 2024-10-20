@@ -18,6 +18,8 @@
 ## Features
 | Version     | Description                          	   |
 |-------------|--------------------------------------------|
+| 0.0.1-final | Final version for 0.0.1                	   |
+|             | - fix bug search Dao	Employee				   |
 | 0.0.1-RC3   | RC3 version                          	   |
 |             | - update lazy EmployeeServiceDatabase	   |
 |             | - update Utility class					   |

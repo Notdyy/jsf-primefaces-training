@@ -13,13 +13,13 @@
 		<p:panelGrid columns="2">
 			<p:outputLabel for="firstname" value="First Name" />
 			<p:inputText id="firstname"
-				value="#{crudBean.employeeCriterias.firstName}" autocomplete="off">
+				value="#{crudBean.employeeCriteria.firstName}" autocomplete="off">
 				<p:ajax event="keyup" listener="#{crudBean.searchBtnOnclick}" update="datatable"/>
 			</p:inputText>
 
 			<p:outputLabel for="lastname" value="Last Name" />
 			<p:inputText id="lastname"
-				value="#{crudBean.employeeCriterias.lastName}" autocomplete="off" >
+				value="#{crudBean.employeeCriteria.lastName}" autocomplete="off" >
 				<p:ajax event="keyup" listener="#{crudBean.searchBtnOnclick}" update="datatable"/>
 			</p:inputText>	
 		</p:panelGrid>
@@ -45,7 +45,9 @@
 			currentPageReportTemplate="รายการที่ {startRecord} ถึง {endRecord} จากจำนวนที่พบทั้งหมด {totalRecords} รายการ"
 			paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 			rowsPerPageTemplate="10,15"
-			rowKey="#{m.id}" paginator="true" rows="10"
+			rowKey="#{m.id}" 
+			paginator="true" 
+			rows="10"
 			lazy="true"
 			paginatorPosition="bottom">
 			<p:ajax event="rowSelect" listener="#{crudBean.onRowSelect}" update="@form" />
@@ -67,5 +69,6 @@
 				</p:commandButton>
 			</p:column>
 		</p:dataTable>
+		<p:scrollTop />
 	</p:panel>
 </ui:composition>

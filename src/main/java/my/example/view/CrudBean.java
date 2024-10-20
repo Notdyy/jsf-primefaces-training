@@ -1,19 +1,20 @@
 package my.example.view;
 
 import java.io.Serializable;
-import java.util.List;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.primefaces.PrimeFaces;
+import org.apache.commons.beanutils.BeanUtils;
 import org.primefaces.event.SelectEvent;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import my.example.dto.EmployeeDto;
 import my.example.exception.AgeUnderLimitException;
 import my.example.model.Employee;
 import my.example.model.EmployeeCriteria;
@@ -31,16 +32,12 @@ public class CrudBean extends ViewBase implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-
-	private Employee employeeCriteria;
+	private EmployeeCriteria employeeCriteria = EmployeeCriteria.builder().build();
 	private Employee employeeEdit;
 	private Employee selectedMember;
-	private List<Employee> employeeList;
-	
-	private EmployeeCriteria employeeCriterias = EmployeeCriteria.builder().build();
 
 	@Inject
-	@Repository(name = Repository.MEMORY)
+	@Repository(name = Repository.DATABASE)
 	private EmployeeServiceable service;
 	
 	@Inject
@@ -49,67 +46,64 @@ public class CrudBean extends ViewBase implements Serializable {
 	@PostConstruct
 	public void init() {
 		this.setMode(READ_MODE);
-		employeeCriteria = new Employee();
 		lazyEmployeeModel.setEmployeeCriteria(service.getEmployeesCriterias(1000));
-		lazyEmployeeModel.setEmployeeCriteria(employeeCriterias);
-//		employeeList = service.search(employeeCriteria);
+		lazyEmployeeModel.setEmployeeCriteria(employeeCriteria);
 	}
 
 	public void searchBtnOnclick() {
-		log.debug("begin searchBtnOnclick employeeList -> {}", employeeList);
-		lazyEmployeeModel.setEmployeeCriteria(employeeCriterias);
-		employeeList = service.search(employeeCriteria);
+		log.debug("begin searchBtnOnclick employeeList -> {}", employeeCriteria);
+		lazyEmployeeModel.setEmployeeCriteria(employeeCriteria);
 		log.debug("end searchBtnOnclick employeeEdit -> {}",employeeEdit);
 	}
 
 	public void addBtnOnclick() {
 		log.debug("begin addBtnOnclick employeeEdit -> {}", employeeEdit);
 		this.setMode(CREATE_MODE);
-		employeeEdit = new Employee();
+		employeeEdit = EmployeeDto.mapEmpCriteriaToEmp(EmployeeCriteria.builder().build());
 		log.debug("end addBtnOnclick employeeEdit -> {}",employeeEdit);
 
 	}
 
 	public void editBtnOnclick(Employee p) {
 		log.debug("begin editBtnOnclick employeeEdit -> {}", employeeEdit);
-		this.setMode(UPDATE_MODE);
-		employeeEdit = new Employee(p);
-		log.debug("end editBtnOnclick, {}", employeeEdit);
+		try {
+			this.setMode(UPDATE_MODE);
+			employeeEdit = new Employee();
+			BeanUtils.copyProperties(employeeEdit, p);
+			log.debug("end editBtnOnclick, {}", employeeEdit);
+		} catch (IllegalAccessException | InvocationTargetException e) {
+			messageError(e);
+		}
 	}
 	
-	public void saveBtnOnclick() {
+	public void saveBtnOnclick(){
+		log.debug("begin saveBtnOnclick employeeEdit -> {}, selectedMember -> {}", employeeEdit, selectedMember);
 		try {
-			log.debug("begin saveBtnOnclick employeeEdit -> {}, selectedMember -> {}", employeeEdit, selectedMember);
 			if (this.employeeEdit.getAge(this.employeeEdit.getBirthDate()).getYears() < 2) {
-				messageError();
+				messageErrorInfo();
 				throw new AgeUnderLimitException("Age must be more than 2 years.");
 			}
 			service.add(employeeEdit);
 			this.setMode(UPDATE_MODE);
 			messageCompelete();
-			this.selectedMember = new Employee(employeeEdit);
-			PrimeFaces.current().ajax().update("formc");
-		} catch (AgeUnderLimitException e) {
-			log.error("error employeeEdit {}", employeeEdit);
-			log.error("error Exception {}", e);
+			selectedMember = new Employee();
+			BeanUtils.copyProperties(selectedMember, employeeEdit);
+		} catch (IllegalAccessException | InvocationTargetException | AgeUnderLimitException e) {
+			messageError(e);
 		}
 	}
 
 	public void updateBtnOnclick() {
+		log.debug("begin updateBtnOnclick employeeEdit -> {}, selectedMember -> {}", employeeEdit, selectedMember);
 		try {
-			log.debug("begin updateBtnOnclick employeeEdit -> {}, selectedMember -> {}", employeeEdit, selectedMember);
 			if (this.employeeEdit.getAge(this.employeeEdit.getBirthDate()).getYears() < 2) {
-				messageError();
-				employeeEdit = new Employee(selectedMember);
+				BeanUtils.copyProperties(employeeEdit, selectedMember);
 				throw new AgeUnderLimitException("Age must be more than 2 years.");
 			}
 			service.update(employeeEdit);
 			messageEditCompelete();
-		} catch (AgeUnderLimitException e) {
-			log.error("error employeeEdit {}", employeeEdit);
-			log.error("error Exception {}", e);
-		} finally {
-			log.debug("end updateBtnOnclick, {}", employeeEdit);
+		} catch (IllegalAccessException | InvocationTargetException | AgeUnderLimitException e) {
+			messageError(e);
 		}
 
 	}
@@ -122,39 +116,45 @@ public class CrudBean extends ViewBase implements Serializable {
 	}
 
 	public void backBtnOnclick() {
-		log.debug("begin backBtnOnclick mode -> {}", mode);
 		this.setMode(READ_MODE);
-		employeeList = service.search(employeeCriteria);
-		log.debug("end backBtnOnclick, {}", mode);
+		lazyEmployeeModel.setEmployeeCriteria(employeeCriteria);
 	}
 
 	public void resetBtnOnclick() {
-		log.debug("begin resetBtnOnclick mode -> {}", mode);
-		switch (mode) {
-		case CREATE_MODE:
-			this.employeeEdit = new Employee();
-			break;
-		case UPDATE_MODE:
-			this.employeeEdit = new Employee(selectedMember);
-			break;
-		case READ_MODE:
-			this.employeeCriteria = new Employee();
-			employeeList = service.search(employeeCriteria);
-			break;
-		default:
-			break;
+		try {
+			log.debug("begin resetBtnOnclick mode -> {}", mode);
+			switch (mode) {
+			case CREATE_MODE:
+				this.employeeEdit = new Employee();
+				break;
+			case UPDATE_MODE:
+				BeanUtils.copyProperties(employeeEdit, selectedMember);
+				break;
+			case READ_MODE:
+				this.employeeCriteria = EmployeeCriteria.builder().build();
+				lazyEmployeeModel.setEmployeeCriteria(employeeCriteria);
+				break;
+			default:
+				break;
+			}
+		} catch (IllegalAccessException | InvocationTargetException e) {
+			messageError(e);
 		}
-
-		log.debug("end resetBtnOnclick {}", mode);
 	}
 
 	public void onRowSelect(SelectEvent<Employee> event) {
-		log.debug("begin onRowSelect employeeEdit -> {}",employeeEdit);
-		this.selectedMember = event.getObject();
-		if (this.selectedMember != null) {
-			this.setMode(UPDATE_MODE);
-			this.employeeEdit = new Employee(selectedMember);
+		log.debug("begin onRowSelect employeeEdit -> {}", employeeEdit);
+		try {
+			this.selectedMember = event.getObject();
+			if (this.selectedMember != null) {
+				this.setMode(UPDATE_MODE);
+				employeeEdit = new Employee();
+				BeanUtils.copyProperties(employeeEdit, selectedMember);
+			}
+			log.debug("end onRowSelect employeeEdit -> {}", employeeEdit);
+		} catch (IllegalAccessException | InvocationTargetException e) {
+			messageError(e);
+			e.printStackTrace();
 		}
-		log.debug("begin onRowSelect employeeEdit -> {}",employeeEdit);
 	}
 }

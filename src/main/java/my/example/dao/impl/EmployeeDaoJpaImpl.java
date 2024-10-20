@@ -10,17 +10,20 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.model.FilterMeta;
+import org.primefaces.model.SortMeta;
 
 import my.example.dao.EmployeeDaoServiceable;
 import my.example.entity.EmployeeData;
 import my.example.jpa.AppDbService;
 import my.example.model.Employee;
 import my.example.model.EmployeeCriteria;
+import my.example.utils.EmployeeCustomFilterAndSortBy;
 
 @ApplicationScoped
 public class EmployeeDaoJpaImpl extends AbstractJpa<EmployeeData> implements EmployeeDaoServiceable {
@@ -47,6 +50,9 @@ public class EmployeeDaoJpaImpl extends AbstractJpa<EmployeeData> implements Emp
 	
 	// ---- implement DAO method
 	
+	private static String firstNameParam = "firstName";
+	private static String lastNameParam = "lastName";
+	
 	@Override
 	public List<EmployeeData> findByName(Employee emp) {
 		StringBuilder sb = new StringBuilder();
@@ -66,10 +72,10 @@ public class EmployeeDaoJpaImpl extends AbstractJpa<EmployeeData> implements Emp
 
 		TypedQuery<EmployeeData> query = this.getEm().createQuery(sb.toString(), EmployeeData.class);
 		if (emp != null && emp.getFirstName() != null) {
-			query.setParameter("firstName", emp.getFirstName().concat("%"));
+			query.setParameter(firstNameParam, emp.getFirstName().concat("%"));
 		}
 		if (emp != null && emp.getLastName() != null) {
-			query.setParameter("lastName", emp.getLastName().concat("%"));
+			query.setParameter(lastNameParam, emp.getLastName().concat("%"));
 		}
 
 		return query.getResultList();
@@ -97,14 +103,21 @@ public class EmployeeDaoJpaImpl extends AbstractJpa<EmployeeData> implements Emp
 			predicates.add(cb.equal(adj.get("id"), employeeCriteria.getId()));
 		}
 		if (StringUtils.isNotEmpty(employeeCriteria.getFirstName())) {
-		    predicates.add(cb.equal(adj.get("firstName"), employeeCriteria.getFirstName()));
+		    predicates.add(cb.equal(adj.get(firstNameParam), employeeCriteria.getFirstName()));
 		}
 		if (StringUtils.isNotEmpty(employeeCriteria.getLastName())) {
-		    predicates.add(cb.equal(adj.get("lastName"), employeeCriteria.getLastName()));
+		    predicates.add(cb.equal(adj.get(lastNameParam), employeeCriteria.getLastName()));
 		}
 		if (employeeCriteria.getBirthDate() != null) {
 	        predicates.add(cb.equal(adj.get("birthDate"), employeeCriteria.getBirthDate()));
 	    }
+		if (filterBy != null && !filterBy.isEmpty()) {
+			List<Predicate> predicatesFilter = EmployeeCustomFilterAndSortBy.customFilterMatchMode(filterBy, cb, adj);
+			if (!predicatesFilter.isEmpty()) {
+			    predicates.addAll(predicatesFilter);
+			}
+		}
+		
 
 		
 		
@@ -112,6 +125,49 @@ public class EmployeeDaoJpaImpl extends AbstractJpa<EmployeeData> implements Emp
 		TypedQuery<Long> query = getEm().createQuery(cq);
 		
 		return query.getSingleResult();
+	}
+	
+	@Override
+	public List<EmployeeData> search(int offset, int pageSize, EmployeeCriteria employeeCriteria, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
+		
+		CriteriaBuilder cb = this.getEm().getCriteriaBuilder();
+        CriteriaQuery<EmployeeData> cq = cb.createQuery(EmployeeData.class);
+        List<Predicate> predicates = new ArrayList<>();
+
+        Root<EmployeeData> adj = cq.from(EmployeeData.class);
+        
+        if (employeeCriteria.getId() != null) {
+			predicates.add(cb.equal(adj.get("id"), employeeCriteria.getId()));
+		}
+		if (StringUtils.isNotEmpty(employeeCriteria.getFirstName())) {
+		    predicates.add(cb.equal(adj.get(firstNameParam), employeeCriteria.getFirstName()));
+		}
+		if (StringUtils.isNotEmpty(employeeCriteria.getLastName())) {
+		    predicates.add(cb.equal(adj.get(lastNameParam), employeeCriteria.getLastName()));
+		}
+		if (employeeCriteria.getBirthDate() != null) {
+	        predicates.add(cb.equal(adj.get("birthDate"), employeeCriteria.getBirthDate()));
+	    }
+		if (filterBy != null && !filterBy.isEmpty()) {
+			List<Predicate> predicatesFilter = EmployeeCustomFilterAndSortBy.customFilterMatchMode(filterBy, cb, adj);
+			if (!predicatesFilter.isEmpty()) {
+			    predicates.addAll(predicatesFilter);
+			}
+		}
+		if (sortBy != null && !sortBy.isEmpty()) {
+			List<Order> orders = EmployeeCustomFilterAndSortBy.customSortBy(sortBy, cb, adj);
+		    if (!orders.isEmpty()) {
+		        cq.orderBy(orders);
+		    }
+		}
+        
+        cq.where(predicates.toArray(new Predicate[] {}));
+		TypedQuery<EmployeeData> query = this.getEm().createQuery(cq);
+		
+		
+		query.setFirstResult(offset);
+		query.setMaxResults(pageSize);
+		return query.getResultList();
 	}
 
 

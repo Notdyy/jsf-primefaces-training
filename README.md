@@ -18,6 +18,10 @@
 ## Features
 | Version     | Description                          	   |
 |-------------|--------------------------------------------|
+| 0.0.1-RC3   | RC3 version                          	   |
+|             | - update lazy EmployeeServiceDatabase	   |
+|             | - update Utility class					   |
+|             | - update pom.xml and web.xml				   |
 | 0.0.1-RC2   | RC2 version                          	   |
 |             | - update lazy EmployeeServiceMemory		   |
 | 0.0.1-RC1   | RC1 version                          	   |

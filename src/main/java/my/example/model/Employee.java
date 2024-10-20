@@ -3,7 +3,6 @@ package my.example.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.UUID;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,8 +22,7 @@ public class Employee implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Builder.Default
-	private String id = UUID.randomUUID().toString();
+	private String id;
 	
 	private String firstName;
 	
@@ -38,14 +36,6 @@ public class Employee implements Serializable {
 	    }
 	    return null; 
 	}
-	
-	 // Clone method
-    public Employee(Employee other) {
-        this.id = other.id;
-        this.firstName = other.firstName;
-        this.lastName = other.lastName;
-        this.birthDate = other.birthDate;
-    }
 
 
 }

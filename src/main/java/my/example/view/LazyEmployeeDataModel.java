@@ -30,7 +30,7 @@ public class LazyEmployeeDataModel extends LazyDataModel<Employee> implements Se
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	@Repository(name = Repository.MEMORY)
+	@Repository(name = Repository.DATABASE)
 	private EmployeeServiceable service;
 	
 	private EmployeeCriteria employeeCriteria;
@@ -39,8 +39,7 @@ public class LazyEmployeeDataModel extends LazyDataModel<Employee> implements Se
 	@Override
 	public int count(Map<String, FilterMeta> filterBy) {
 	    if (employeeCriteria == null) {
-	        log.warn("employeeCriteria is null when counting employees.");
-	        return 0; // or some appropriate value
+	        return 0;
 	    }
 	    return service.countTicket(employeeCriteria, filterBy).intValue();
 	}

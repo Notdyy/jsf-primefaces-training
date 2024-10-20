@@ -34,8 +34,12 @@ public class ViewBase {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", RECORD_EDIT_COMPELETE));
 	}
 	
-	protected void messageError() {
+	protected void messageErrorInfo() {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", AGEUNDER_LIMIT));
+	}
+	
+	protected void messageError(Object message) {
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", message.toString()));
 	}
 	
 	protected void messageDeleteCompelete() {

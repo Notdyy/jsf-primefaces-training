@@ -1,3 +1,4 @@
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -7,18 +8,18 @@
 	<artifactId>jsf-primefaces</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>jsf-primefaces Maven Webapp</name>
 
+	<name>jsf-primefaces Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
-		<endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<!-- Maven Build Plugin Properties -->
 		<my.maven.compiler>3.0</my.maven.compiler>
 		<my.maven.war>3.3.1</my.maven.war>
 		<my.maven.resources>2.6</my.maven.resources>
+		<maven.release>2.5.3</maven.release>
 
 		<!-- Java Properties -->
 		<my.java>1.8</my.java>
@@ -27,29 +28,32 @@
 
 		<!-- Complied Scope  -->
 		<my.org.primefaces>13.0.7</my.org.primefaces>
+		<my.webjars.font-awesome>5.9.0</my.webjars.font-awesome>
+
 		<my.org.glassfish.javax.faces>2.4.0</my.org.glassfish.javax.faces>
 		<my.javax.servlet.jstl>1.2</my.javax.servlet.jstl>
 		<my.commons-beanutils>1.9.4</my.commons-beanutils>
 		<my.org.hibernate.hibernate-core>5.6.6.Final</my.org.hibernate.hibernate-core>
 		<my.org.eclipse.persistence>2.7.8</my.org.eclipse.persistence>
 		<my.org.slf4j>1.7.32</my.org.slf4j>
-		<logback.version>1.2.3</logback.version>
+		<my.cdi-api>2.0.SP1</my.cdi-api>
+		<my.weld-servlet-shaded>3.1.9.Final</my.weld-servlet-shaded>
+		<my.javax.el.el-api>2.2</my.javax.el.el-api>
+		<my.validation-api>2.0.1.Final</my.validation-api>
+		<my.mariadb-java-client>2.4.3</my.mariadb-java-client>
+		<my.ch-qos-logback>1.2.11</my.ch-qos-logback> 
 
 		<!-- Provided Scope  -->
 		<my.javax.servlet-api>3.0.1</my.javax.servlet-api>
+		<my.javaee.web.api>8.0.1</my.javaee.web.api>
 		<my.lombok>1.18.22</my.lombok>
 
 		<!-- Test Scope -->
 		<my.junit>4.13.1</my.junit>
+		<my.dbunit>2.7.3</my.dbunit>
 		<my.sqlite-jdbc>3.25.2</my.sqlite-jdbc>
 		<my.org.hsqldb>2.4.1</my.org.hsqldb>
 
-		<my.cdi-api>2.0.SP1</my.cdi-api>
-		<my.weld-servlet-shaded>3.1.9.Final</my.weld-servlet-shaded>
-		<my.javax.el.el-api>2.2</my.javax.el.el-api>
-		<my.javaee.web.api>8.0.1</my.javaee.web.api>
-		<my.cdi-api>2.0.SP1</my.cdi-api>
-		<my.validation-api>2.0.1.Final</my.validation-api>
 
 	</properties>
 
@@ -135,21 +139,23 @@
 			<version>${my.org.slf4j}</version>
 			<scope>compile</scope>
 		</dependency>
+
+		<!--
+		https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
 		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>${logback.version}</version>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+			<version>${my.mariadb-java-client}</version>
 			<scope>compile</scope>
 		</dependency>
 
-
 		<dependency>
-			<groupId>javax.persistence</groupId>
-			<artifactId>persistence-api</artifactId>
-			<version>1.0.2</version>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${my.ch-qos-logback}</version>
+			<scope>compile</scope>
 		</dependency>
 
-		<!-- เพิ่ม Dependency สำหรับ javax.validation -->
 
 		<!-- Provided Scope  -->
 
@@ -183,20 +189,34 @@
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
 			<version>${my.org.hsqldb}</version>
-			<scope>runtime</scope>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.dbunit</groupId>
+			<artifactId>dbunit</artifactId>
+			<version>${my.dbunit}</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.xerial</groupId>
 			<artifactId>sqlite-jdbc</artifactId>
 			<version>${my.sqlite-jdbc}</version>
-			<scope>runtime</scope>
+			<scope>compile</scope>
 		</dependency>
 
-		<!-- FontAwesome -->
+
+		<!-- Font Awesome -->
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>font-awesome</artifactId>
-			<version>5.12.0</version>
+			<version>${my.webjars.font-awesome}</version>
 			<scope>compile</scope>
 		</dependency>
 		<!-- PrimeFlex  -->
@@ -205,13 +225,6 @@
 			<artifactId>primeflex</artifactId>
 			<version>3.3.1</version>
 		</dependency>
-		<!-- inject -->
-		<dependency>
-			<groupId>javax.inject</groupId>
-			<artifactId>javax.inject</artifactId>
-			<version>1</version>
-			<scope>compile</scope>
-		</dependency>
 		<!-- Faker -->
 		<dependency>
 			<groupId>com.github.javafaker</groupId>
@@ -219,6 +232,7 @@
 			<version>1.0.2</version>
 			<scope>compile</scope>
 		</dependency>
+
 	</dependencies>
 
 
@@ -231,9 +245,7 @@
 				<configuration>
 					<source>${my.java}</source>
 					<target>${my.java}</target>
-					<compilerArguments>
-						<endorseddirs>${endorsed.dir}</endorseddirs>
-					</compilerArguments>
+					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -304,6 +316,16 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>${maven.release}</version>
+				<configuration>
+					<tagNameFormat>v@{project.version}</tagNameFormat>
+					<arguments>-Dmaven.javadoc.skip=true
+						-Dmaven.test.skipTests=true -Dmaven.test.skip=true</arguments>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -33,8 +34,7 @@ public class EmployeeData implements Serializable {
 
 	@Id
 	@Column(name = "id")
-	@Builder.Default
-	private String id = UUID.randomUUID().toString();
+	private String id;
 	
 	@Column(name = "FNAME")
 	private String firstName;
@@ -45,6 +45,11 @@ public class EmployeeData implements Serializable {
 	@Column(name = "BIRTHDATE")
 	@Convert(converter = LocalDateToTimestampConverter.class)
 	private LocalDate birthDate;
+	
+	@PrePersist
+	public void prePersist() {
+		this.id = UUID.randomUUID().toString();
+	}
 
 
 }

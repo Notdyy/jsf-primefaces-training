@@ -113,8 +113,10 @@ public class EmployeeServiceDatabase implements EmployeeServiceable {
 
 	@Override
 	public List<Employee> searchEmployee(int first, int pageSize, EmployeeCriteria employeeCriteria, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
-		// TODO Auto-generated method stub
-		return null;
+	    log.debug("searchEmployee ({})", employeeCriteria);
+
+	    List<EmployeeData> datas = employeeDao.search(first, pageSize, employeeCriteria, sortBy, filterBy);
+	    return EmployeeDto.toModelListEmp(datas);
 	}
 
 	@Override
@@ -129,9 +131,28 @@ public class EmployeeServiceDatabase implements EmployeeServiceable {
 	}
 
 	@Override
-	public EmployeeCriteria getEmployeesCriterias(int i) {
-		// TODO Auto-generated method stub
-		return null;
+	public EmployeeCriteria getEmployeesCriterias(int size) {
+		try {
+			EmployeeCriteria aggregatedCriteria = new EmployeeCriteria();
+	        int countEmpDb = employeeDao.countDataDb();
+	        int minAge = 2;
+	        int maxAge = 100;
+	        log.debug("countEmpDb -> {}", countEmpDb);
+	        if (size >= countEmpDb) {
+	            for (int i = countEmpDb; i < size; i++) {
+	            	Employee employeeMock = EmployeeUtils.createMockEmployee(minAge, maxAge);
+	                EmployeeData employeeData = EmployeeDto.toEntityEmp(employeeMock);
+	                db.begin();
+	                employeeDao.create(employeeData);
+	                db.commit();
+	                aggregatedCriteria = EmployeeDto.mapEmpToEmpCriteria(employeeMock); 
+	            }
+	        }
+	        return aggregatedCriteria;
+		} catch (Exception e) {
+	        db.rollback();
+	        throw e;
+	    }
 	}
 
 

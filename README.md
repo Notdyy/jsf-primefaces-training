@@ -11,22 +11,23 @@
 ## Project Information
 - **Group ID**: my.example
 - **Artifact ID**: jsf-primefaces
-- **Version**: 0.0.1-SNAPSHOT
+- **Version**: 0.0.2-SNAPSHOT
 - **Packaging**: WAR
-- **Java Version**: 1.8
+- **Java Version**: 17
 
 ## Features
 | Version     | Description                          	   |
 |-------------|--------------------------------------------|
+| 0.0.2-RC1   | 0.0.2-RC1 version               	   		   |
 | 0.0.1-final | Final version for 0.0.1                	   |
 |             | - fix bug search Dao	Employee				   |
-| 0.0.1-RC3   | RC3 version                          	   |
+| 0.0.1-RC3   | 0.0.1-RC3 version                          |
 |             | - update lazy EmployeeServiceDatabase	   |
 |             | - update Utility class					   |
 |             | - update pom.xml and web.xml				   |
-| 0.0.1-RC2   | RC2 version                          	   |
+| 0.0.1-RC2   | 0.0.1-RC2 version                          |
 |             | - update lazy EmployeeServiceMemory		   |
-| 0.0.1-RC1   | RC1 version                          	   |
+| 0.0.1-RC1   | 0.0.1-RC1 version                          |
 |             | - Implemented LocalDateToTimestampConverter|
 |             | - Updated Faker for mock data utilities    |
 | 0.0.0-demo  | Final version for demo                     |

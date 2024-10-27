@@ -7,7 +7,7 @@
 	<groupId>my.example</groupId>
 	<artifactId>jsf-primefaces</artifactId>
 	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 
 	<name>jsf-primefaces Maven Webapp</name>
 	<url>http://maven.apache.org</url>
@@ -22,7 +22,7 @@
 		<maven.release>2.5.3</maven.release>
 
 		<!-- Java Properties -->
-		<my.java>1.8</my.java>
+		<my.java>17</my.java>
 
 		<!-- Dependency Properties -->
 
@@ -34,7 +34,7 @@
 		<my.javax.servlet.jstl>1.2</my.javax.servlet.jstl>
 		<my.commons-beanutils>1.9.4</my.commons-beanutils>
 		<my.org.hibernate.hibernate-core>5.6.6.Final</my.org.hibernate.hibernate-core>
-		<my.org.eclipse.persistence>2.7.8</my.org.eclipse.persistence>
+		<my.org.eclipse.persistence>2.7.13</my.org.eclipse.persistence>
 		<my.org.slf4j>1.7.32</my.org.slf4j>
 		<my.cdi-api>2.0.SP1</my.cdi-api>
 		<my.weld-servlet-shaded>3.1.9.Final</my.weld-servlet-shaded>
@@ -46,7 +46,7 @@
 		<!-- Provided Scope  -->
 		<my.javax.servlet-api>3.0.1</my.javax.servlet-api>
 		<my.javaee.web.api>8.0.1</my.javaee.web.api>
-		<my.lombok>1.18.22</my.lombok>
+		<my.lombok>1.18.30</my.lombok>
 
 		<!-- Test Scope -->
 		<my.junit>4.13.1</my.junit>

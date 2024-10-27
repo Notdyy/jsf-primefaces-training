@@ -5,7 +5,8 @@
 ## Badges
 [![Maven](https://img.shields.io/maven-central/v/org.primefaces/primefaces/13.0.7.svg)](https://repo.maven.apache.org/maven2/org/primefaces/primefaces/13.0.7/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Java](https://img.shields.io/badge/Java-1.8-brightgreen.svg)](https://www.oracle.com/java/technologies/javase/javase8-archive-downloads.html)
+[![Java](https://img.shields.io/badge/Java-17-brightgreen.svg)](https://openjdk.java.net/install/)
+[![JSF](https://img.shields.io/badge/JSF-2.4.0-brightgreen.svg)](https://javaee.github.io/javaserverfaces/)
 
 
 ## Project Information

@@ -1,6 +1,6 @@
 # jsf-primefaces - Training
 
-โปรเจคนี้มีไว้เพื่อศึกษาเกี่ยวกับการพัฒนาเว็บแอปพลิเคชันด้วย JSF และ PrimeFaces
+โปรเจคนี้มีไว้เพื่อศึกษาเกี่ยวกับการพัฒนาเว็บแอปพลิเคชันด้วย JSF และ PrimeFaces!
 
 ## Badges
 [![Maven](https://img.shields.io/maven-central/v/org.primefaces/primefaces/13.0.7.svg)](https://repo.maven.apache.org/maven2/org/primefaces/primefaces/13.0.7/)
